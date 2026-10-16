@@ -7,7 +7,7 @@
     "node": ">=22.6"
   },
   "scripts": {
-    "finder": "node --experimental-strip-types --no-warnings src/finder/cli.ts",
+    "finder": "node --env-file-if-exists=.env.local --experimental-strip-types --no-warnings src/finder/cli.ts",
     "test": "node --experimental-strip-types --no-warnings --test test/*.test.ts",
     "lint": "tsc --noEmit"
   },
