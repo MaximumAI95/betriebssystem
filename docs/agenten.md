@@ -25,19 +25,17 @@ Grundregeln für alle Agenten:
 
 ---
 
-## A0 · Lead-Finder
+## A0 · Lead-Finder ✅ gebaut (`worker/src/finder/`)
 
-**Ziel:** Betriebe aus den Startbranchen in den Zielregionen finden.
+**Ziel:** Betriebe **aller Branchen** mit eigener Website in einem Gebiet finden (Stadtteil, Stadt oder Gemeinde) und nach Bereichen ordnen.
 
-- **Eingabe:** `config/lead-suche.json` (Gewerke × Orte).
-- **Quelle:** Google **Places API (New)**, *Text Search*, z. B. „Kfz-Werkstatt in Karlsruhe“. Je Suche bis zu 60 Treffer, deshalb nach Stadtteilen bzw. Umlandgemeinden aufteilen.
-- **Ablauf:**
-  1. Text Search mit Feldmaske nur für die nötigen Felder (`id`, `displayName`, `formattedAddress`, `websiteUri`, `types`, `businessStatus`). Das hält die Kosten niedrig.
-  2. Ketten und Konzeptwerkstätten herausfiltern (Liste in der Konfiguration, z. B. Bosch Car Service, ATU, Pitstop), dazu geschlossene Betriebe.
-  3. Dubletten über `google_place_id` und Website-Domain erkennen.
-  4. Betrieb mit `quelle = 'google_places'` anlegen. Der Trigger startet A1.
-- **Wichtig, Google-Bedingungen:** Laut den Maps-Platform-Nutzungsbedingungen dürfen Places-Inhalte nicht dauerhaft gespeichert werden. Ausgenommen ist die `place_id`. Darum speichern wir **die `place_id` und die Daten aus dem Impressum der Website** (A1), nicht Googles Adresse, Telefonnummer oder Bewertungen. Bewertungszahlen fragt A2 bzw. A3 bei Bedarf frisch ab. Vor dem Start prüfen.
-- **Kosten:** Text Search kostet bei Google nach Feldumfang. Vorab im Google-Cloud-Preisrechner prüfen und ein Budget-Limit setzen.
+- **Quellen:** OpenStreetMap über die Overpass-API (kostenlos, speicherbar) und/oder Google Places API (New) Text Search mit rund 40 Suchbegriffen quer durch alle Bereiche.
+- **Einordnung:** feste Regeln aus OSM-Tags bzw. Google-Typen ergeben Bereich und Kategorie (z. B. „Handwerk & Bau · Elektroinstallateur“). Was nur über den Firmennamen erkennbar ist, gilt als unsicher und kann mit `--claude` geprüft werden (nur diese Fälle, in Paketen zu 40).
+- **Passung zum Angebot:** hoch (Handwerk, Kfz), mittel (Gesundheit, Beauty, Büro/Dienstleistung, Gastronomie), niedrig (Freizeit/Bildung, Einzelhandel, Sonstige).
+- **Aussortiert:** Ketten (Markenangabe in OSM oder bekannte Filialisten), öffentliche Einrichtungen, Vereine, standardmäßig Betriebe ohne eigene Website.
+- **Dubletten:** gleiche Website-Domain oder gleicher Name plus PLZ. OSM hat Vorrang, Google ergänzt fehlende Angaben. In der Datenbank schützen `osm_id`, `google_place_id` und die Website vor doppelten Einträgen.
+- **Ergebnis:** Betriebe mit `bereich`, `kategorie`, `passung`, `gebiet` im CRM, Lauf-Protokoll in `agent_laeufe`, optional CSV.
+- **Google-Bedingungen:** Places-Inhalte sollen nicht dauerhaft vorgehalten werden. A1 ersetzt Name und Adresse durch die Angaben aus dem Impressum. Vor dem Dauerbetrieb prüfen.
 
 ## A1 · Anreicherung
 

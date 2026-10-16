@@ -1,0 +1,19 @@
+{
+  "version": 0.6,
+  "generator": "Testdaten (von Hand erstellt, keine echten Betriebe)",
+  "elements": [
+    { "type": "node", "id": 1, "lat": 48.781, "lon": 9.205, "tags": { "name": "Elektro Testmann GmbH", "craft": "electrician", "website": "www.elektro-testmann.example", "phone": "+49 711 000001", "addr:street": "Teststraße", "addr:housenumber": "1", "addr:postcode": "70186", "addr:city": "Stuttgart" } },
+    { "type": "way", "id": 2, "center": { "lat": 48.782, "lon": 9.206 }, "tags": { "name": "Autowerkstatt Probe", "shop": "car_repair", "contact:website": "https://autowerkstatt-probe.example/", "addr:postcode": "70186" } },
+    { "type": "node", "id": 3, "lat": 48.78, "lon": 9.2, "tags": { "name": "Salon Schnitt", "shop": "hairdresser", "website": "https://www.instagram.com/salonschnitt" } },
+    { "type": "node", "id": 4, "lat": 48.78, "lon": 9.2, "tags": { "name": "Lidl", "shop": "supermarket", "brand": "Lidl", "website": "https://www.lidl.de" } },
+    { "type": "node", "id": 5, "lat": 48.78, "lon": 9.2, "tags": { "name": "Grundschule Gablenberg", "amenity": "school", "website": "https://schule.example" } },
+    { "type": "node", "id": 6, "lat": 48.78, "lon": 9.2, "tags": { "name": "Steuerkanzlei Beispiel", "office": "tax_advisor", "website": "steuer-beispiel.example", "email": "info@steuer-beispiel.example" } },
+    { "type": "node", "id": 7, "lat": 48.78, "lon": 9.2, "tags": { "name": "Physio am Berg", "healthcare": "physiotherapist", "website": "https://physio-am-berg.example" } },
+    { "type": "node", "id": 8, "lat": 48.78, "lon": 9.2, "tags": { "name": "Trattoria Esempio", "amenity": "restaurant", "website": "https://trattoria-esempio.example" } },
+    { "type": "node", "id": 9, "lat": 48.78, "lon": 9.2, "tags": { "name": "Müller Sanitär und Heizung", "office": "company", "website": "https://mueller-shk.example" } },
+    { "type": "node", "id": 10, "lat": 48.78, "lon": 9.2, "tags": { "name": "Blumen Ohnenetz", "shop": "florist" } },
+    { "type": "node", "id": 11, "lat": 48.78, "lon": 9.2, "tags": { "name": "Firma XY", "office": "yes", "website": "https://firma-xy.example" } },
+    { "type": "node", "id": 12, "lat": 48.78, "lon": 9.2, "tags": { "shop": "bakery" } },
+    { "type": "node", "id": 13, "lat": 48.78, "lon": 9.2, "tags": { "name": "Elektro Testmann", "craft": "electrician", "website": "https://elektro-testmann.example/kontakt" } }
+  ]
+}

@@ -8,6 +8,7 @@ Ziel: Daniel markiert einen Lead als „interessant“. Nach rund 30 Minuten lie
 | Datei | Inhalt |
 |---|---|
 | `db/migrations/` | Datenbank: Betriebe, Kontakte, Analysen, Dokumente, Angebote, Pakete und Preise aus dem Plan, Agenten-Warteschlange, Freigaben, Zeitleiste, Login, Row Level Security. **Getestet mit PostgreSQL 16.** |
+| `worker/` | Agenten. Bisher: **Lead-Finder** (`worker/src/finder/`) |
 | `web/` | CRM-Oberfläche (Next.js): Übersicht, Neue Leads, Pipeline, Betriebsakte, Freigaben, Agenten |
 | `docs/zielbild.md` | Zielbild: ein Tool für alles (Finanzen, Buchhaltung, Postfach) |
 | `docs/agenten.md` | Die 9 Agenten: Auslöser, Ein- und Ausgaben, Regeln, rechtliche Grenzen |
@@ -31,6 +32,30 @@ npm run build && npm start                           # http://localhost:3000
 ```
 
 Tests: `npm test` (Status-Logik, Freigaben, Versandregel) und `npm run lint` (TypeScript).
+
+## Lead-Finder
+
+Findet Betriebe aller Branchen in einem Gebiet, ordnet sie in 9 Bereiche ein und legt sie im CRM unter „Neue Leads“ ab. Dort lassen sie sich nach Bereich, Gebiet, Region und Passung filtern und als CSV herunterladen.
+
+```bash
+cd worker
+npm install
+export DATABASE_URL="postgres://…"
+npm run finder -- --gebiet Gablenberg --stadt Stuttgart --trocken          # nur anzeigen
+npm run finder -- --gebiet Gablenberg --stadt Stuttgart --csv gablenberg.csv
+npm run finder -- --gebiet Karlsruhe --quelle beide --claude                 # Google + OSM, unklare Fälle mit Claude
+npm run finder -- --hilfe
+```
+
+| Quelle | Kosten | Stärke | Voraussetzung |
+|---|---|---|---|
+| `osm` (Standard) | kostenlos | darf gespeichert werden (ODbL, Quellenangabe) | Zugriff auf `overpass-api.de` |
+| `google` | pro Anfrage (ca. 40 Suchbegriffe × bis zu 3 Seiten je Gebiet) | findet mehr Betriebe mit Website | `GOOGLE_MAPS_API_KEY`, Budget-Limit setzen |
+| `beide` | wie Google | beste Abdeckung, Dubletten werden zusammengeführt | beides |
+
+**Bereiche:** Handwerk & Bau, Kfz (Passung hoch) · Gesundheit & Pflege, Beauty & Wellness, Büro & Dienstleistung, Gastronomie & Hotel (mittel) · Sport, Freizeit & Bildung, Einzelhandel, Sonstige (niedrig).
+**Aussortiert werden:** Ketten und Filialisten, öffentliche Einrichtungen, Vereine, Schulen und standardmäßig Betriebe ohne eigene Website (Facebook- oder Instagram-Seiten zählen nicht; mit `--alle` trotzdem übernehmen).
+Jeder neue Lead stößt automatisch die Anreicherung (A1) an. Mehrfache Läufe erzeugen keine Dubletten.
 
 **Rollen:** `vertrieb` (Daniel) stuft Leads ein und gibt Angebote frei. `technik` (Max) darf zusätzlich den Livegang freigeben. `admin` darf alles.
 
@@ -79,7 +104,7 @@ Tests: `npm test` (Status-Logik, Freigaben, Versandregel) und `npm run lint` (Ty
 | Meilenstein | Inhalt | Ziel laut Plan |
 |---|---|---|
 | **M1 · Grundgerüst** ✅ | Datenbank, Login, CRM-Oberfläche: Leads-Liste, Betriebsakte, Pipeline-Board, Freigaben, Zeitleiste, Agenten-Protokoll. *Offen: Einrichtung bei Supabase und auf dem Server.* | Nov 2026 |
-| **M2 · Leads** | A0 Lead-Finder, A1 Anreicherung, A2 Bewerter. Pilot mit **einer Region und einem Gewerk** (z. B. Kfz Karlsruhe), Qualität mit Daniel prüfen | Nov 2026 |
+| **M2 · Leads** | A0 Lead-Finder ✅ (alle Branchen, 9 Bereiche, OSM + Google, CSV), danach A1 Anreicherung, A2 Bewerter. Pilot mit **einer Region und einem Gewerk** (z. B. Kfz Karlsruhe), Qualität mit Daniel prüfen | Nov 2026 |
 | **M3 · Check und Unterlagen** | A3 Online-Check (Report-PDF, Leitfaden), A7 Terminmappe und Brief-Entwurf | Dez 2026 |
 | **M4 · Demo** | A4 Demo-Generator mit 2 Branchenvorlagen (Kfz, Schreiner), Vorschau-Hosting mit Zugangscode, Löschung nach 60 Tagen, A5 QA | Jan 2027 (Stufe 1) |
 | **M5 · Abschluss und Finanzen** | A6 Prozess-Check-Auswertung, Angebot aus der Preistabelle, E-Signatur, Stripe-Checkout mit SEPA-Mandat. **Finanzen in der Kundenakte:** Rechnungen, Zahlungen, Umsatz, offene Posten aus Stripe-Webhooks | Jan–Feb 2027 |

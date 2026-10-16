@@ -7,6 +7,10 @@ export type Betrieb = {
   name: string;
   branche: string;
   gewerk: string | null;
+  bereich: string;
+  kategorie: string | null;
+  passung: 'hoch' | 'mittel' | 'niedrig' | null;
+  gebiet: string | null;
   strasse: string | null;
   plz: string | null;
   ort: string | null;
@@ -29,19 +33,39 @@ export type Betrieb = {
 };
 
 const BETRIEB_FELDER = sql`
-  b.id, b.name, b.branche, b.gewerk, b.strasse, b.plz, b.ort, b.region, b.website, b.telefon,
+  b.id, b.name, b.branche, b.gewerk, b.bereich, b.kategorie, b.passung, b.gebiet, b.strasse, b.plz, b.ort, b.region, b.website, b.telefon,
   b.email_allgemein, b.mitarbeiter_min, b.mitarbeiter_max, b.status, b.score, b.score_gruende,
   b.hat_selbst_angefragt, b.widerspruch, b.quelle, b.demo_loeschen_am, b.erstellt_am, b.geaendert_am,
   u.name as verantwortlich_name`;
 
-export async function neueLeads(filter: { region?: string; branche?: string }) {
+export type LeadFilter = { region?: string; bereich?: string; gebiet?: string; passung?: string };
+
+export async function neueLeads(filter: LeadFilter, limit = 500) {
   return sql<Betrieb[]>`
     select ${BETRIEB_FELDER} from betriebe b left join benutzer u on u.id = b.verantwortlich
     where b.status in ('neu', 'angereichert', 'bewertet')
       and (${filter.region ?? null}::text is null or b.region = ${filter.region ?? null})
-      and (${filter.branche ?? null}::text is null or b.branche::text = ${filter.branche ?? null})
-    order by b.score desc nulls last, b.erstellt_am desc
-    limit 500`;
+      and (${filter.bereich ?? null}::text is null or b.bereich = ${filter.bereich ?? null})
+      and (${filter.gebiet ?? null}::text is null or b.gebiet = ${filter.gebiet ?? null})
+      and (${filter.passung ?? null}::text is null or b.passung = ${filter.passung ?? null})
+    order by b.score desc nulls last,
+             case b.passung when 'hoch' then 0 when 'mittel' then 1 else 2 end,
+             b.bereich, b.name
+    limit ${limit}`;
+}
+
+/** Anzahl neuer Leads je Bereich und die vorhandenen Suchgebiete (für die Filter). */
+export async function leadUebersicht(filter: LeadFilter = {}) {
+  const bereiche = await sql<{ bereich: string; anzahl: number }[]>`
+    select bereich, count(*)::int as anzahl from betriebe
+    where status in ('neu', 'angereichert', 'bewertet')
+      and (${filter.region ?? null}::text is null or region = ${filter.region ?? null})
+      and (${filter.gebiet ?? null}::text is null or gebiet = ${filter.gebiet ?? null})
+      and (${filter.passung ?? null}::text is null or passung = ${filter.passung ?? null})
+    group by bereich order by anzahl desc`;
+  const gebiete = await sql<{ gebiet: string }[]>`
+    select distinct gebiet from betriebe where gebiet is not null order by gebiet`;
+  return { bereiche, gebiete: gebiete.map((g) => g.gebiet) };
 }
 
 export async function pipeline() {

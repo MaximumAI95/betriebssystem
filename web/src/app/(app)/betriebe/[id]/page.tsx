@@ -4,7 +4,7 @@ import { agentLaeufe, analysen, betrieb, dokumente, kontakte, zeitleiste } from 
 import { emailVersandErlaubt, STATUS_LABEL, istStatus } from '@/lib/status';
 import { kontaktAnlegen, notizHinzufuegen, widerspruchVermerken } from '@/app/actions';
 import { StatusKnoepfe } from '@/components/status-knoepfe';
-import { BRANCHE_LABEL, REGION_LABEL, ScoreBadge, StatusBadge, datum, host } from '@/components/ui';
+import { BEREICH_LABEL, REGION_LABEL, ScoreBadge, StatusBadge, datum, host } from '@/components/ui';
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -68,7 +68,10 @@ export default async function BetriebSeite({ params }: { params: Promise<{ id: s
         <div className="space-y-4">
           <Abschnitt titel="Stammdaten">
             <dl>
-              <Zeile k="Branche" v={BRANCHE_LABEL[b.branche]} />
+              <Zeile k="Bereich" v={BEREICH_LABEL[b.bereich] ?? b.bereich} />
+              <Zeile k="Kategorie" v={b.kategorie} />
+              <Zeile k="Passung" v={b.passung} />
+              <Zeile k="Suchgebiet" v={b.gebiet} />
               <Zeile k="Adresse" v={[b.strasse, [b.plz, b.ort].filter(Boolean).join(' ')].filter(Boolean).join(', ') || null} />
               <Zeile k="Region" v={b.region ? REGION_LABEL[b.region] : null} />
               <Zeile k="Website" v={b.website ? <a href={b.website.includes('://') ? b.website : `https://${b.website}`} target="_blank" rel="noreferrer" className="text-marke hover:underline">{host(b.website)}</a> : null} />

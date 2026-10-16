@@ -59,6 +59,26 @@ export function datum(d: Date | null | undefined) {
   return d ? DATUM.format(d) : '–';
 }
 
+export const BEREICH_LABEL: Record<string, string> = {
+  handwerk: 'Handwerk & Bau',
+  kfz: 'Kfz',
+  gesundheit: 'Gesundheit & Pflege',
+  beauty: 'Beauty & Wellness',
+  dienstleistung: 'Büro & Dienstleistung',
+  gastronomie: 'Gastronomie & Hotel',
+  freizeit_bildung: 'Sport, Freizeit & Bildung',
+  einzelhandel: 'Einzelhandel',
+  sonstige: 'Sonstige',
+};
+
+export function BereichBadge({ bereich, kategorie }: { bereich: string; kategorie?: string | null }) {
+  return (
+    <span className="inline-block rounded-full border border-stone-200 px-2 py-0.5 text-xs text-stone-600">
+      {BEREICH_LABEL[bereich] ?? bereich}{kategorie ? ` · ${kategorie}` : ''}
+    </span>
+  );
+}
+
 export const BRANCHE_LABEL: Record<string, string> = { kfz: 'Kfz', handwerk: 'Handwerk', physio: 'Physio', sonstige: 'Sonstige' };
 export const REGION_LABEL: Record<string, string> = { karlsruhe: 'Karlsruhe', stuttgart: 'Stuttgart', sonstige: 'Sonstige' };
 
