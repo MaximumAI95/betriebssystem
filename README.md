@@ -15,6 +15,10 @@ Ziel: Daniel markiert einen Lead als „interessant“. Nach rund 30 Minuten lie
 | `config/lead-suche.json` | Regionen, Gewerke, Ketten-Ausschluss, Score-Gewichte, Limits |
 | `.env.example` | Welche Zugangsdaten gebraucht werden (Werte nie in den Chat) |
 
+## Auf dem Mac starten (ohne Programmierkenntnisse)
+
+Siehe `LIESMICH.txt`: Node.js und Postgres.app installieren, dann `Start.command` öffnen (beim ersten Mal per Rechtsklick → Öffnen). Leads sucht `Lead-Finder.command`.
+
 ## Schnellstart (lokal oder auf dem Server)
 
 Voraussetzungen: Node.js 22 und eine PostgreSQL-Datenbank (lokal oder Supabase).

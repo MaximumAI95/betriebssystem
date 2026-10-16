@@ -1,0 +1,37 @@
+BETRIEBSSYSTEM AUF DEM MAC STARTEN
+==================================
+
+Einmalig installieren
+---------------------
+1. Node.js (LTS-Version): https://nodejs.org/de/download
+2. Postgres.app: https://postgresapp.com/de/downloads.html
+   In den Programme-Ordner ziehen, öffnen, auf „Initialize“ klicken.
+
+Starten
+-------
+3. Rechtsklick auf „Start.command“ → „Öffnen“ → nochmals „Öffnen“.
+   (Nur beim ersten Mal nötig, weil die Datei aus dem Internet kommt.
+   Danach reicht ein Doppelklick.)
+   Beim ersten Start werden Pakete installiert (einige Minuten) und
+   du legst deinen Zugang an. Danach öffnet sich der Browser mit
+   http://localhost:3000
+
+   Das Terminal-Fenster offen lassen, solange du arbeitest.
+
+Leads suchen
+------------
+4. Doppelklick auf „Lead-Finder.command“, Gebiet eingeben
+   (z. B. Gablenberg, Stadt Stuttgart). Die Leads erscheinen im CRM
+   unter „Neue Leads“ und als CSV-Datei in diesem Ordner.
+
+Optional: mehr Treffer und bessere Einordnung
+---------------------------------------------
+In die Datei worker/.env.local (versteckter Ordner-Inhalt: im Finder
+Cmd+Shift+Punkt drücken) je eine Zeile ergänzen:
+  GOOGLE_MAPS_API_KEY=...   → sucht zusätzlich bei Google
+  ANTHROPIC_API_KEY=...     → ordnet unklare Betriebe mit Claude ein
+
+Probleme?
+---------
+„kann nicht geöffnet werden“ → Rechtsklick → Öffnen (siehe Schritt 3)
+oder Systemeinstellungen → Datenschutz & Sicherheit → „Dennoch öffnen“.

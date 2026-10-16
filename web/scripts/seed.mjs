@@ -38,8 +38,8 @@ try {
       ['Kfz-Service Demo', 'kfz', 'Kfz-Werkstatt', 'Bruchsal', 'karlsruhe', null, null, 'neu'],
     ];
     for (const [name, branche, gewerk, ort, region, website, score, status] of beispiele) {
-      await sql`insert into betriebe (name, branche, gewerk, ort, region, website, score, status, quelle, score_gruende)
-        values (${name}, ${branche}, ${gewerk}, ${ort}, ${region}, ${website}, ${score}, ${status}, 'demo',
+      await sql`insert into betriebe (name, branche, bereich, kategorie, passung, gewerk, ort, region, website, score, status, quelle, score_gruende)
+        values (${name}, ${branche}, ${branche}, ${gewerk}, 'hoch', ${gewerk}, ${ort}, ${region}, ${website}, ${score}, ${status}, 'demo',
           ${score ? sql.json([
             { kriterium: 'Branche', punkte: 20, begruendung: `${gewerk} gehört zu den Startbranchen.` },
             { kriterium: 'Personal', punkte: 15, begruendung: 'Beispiel: 2 offene Stellen auf der Website.' },
