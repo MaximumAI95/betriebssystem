@@ -1,0 +1,33 @@
+{
+  "regionen": {
+    "karlsruhe": ["Karlsruhe", "Ettlingen", "Bruchsal", "Rastatt", "Stutensee", "Rheinstetten", "Pfinztal", "Bretten"],
+    "stuttgart": ["Stuttgart", "Esslingen am Neckar", "Ludwigsburg", "Böblingen", "Sindelfingen", "Leonberg", "Fellbach", "Waiblingen", "Filderstadt"]
+  },
+  "gewerke": [
+    { "branche": "kfz",      "gewerk": "Kfz-Werkstatt", "suchbegriffe": ["Kfz-Werkstatt", "Autowerkstatt", "Kfz Meisterbetrieb"] },
+    { "branche": "handwerk", "gewerk": "Schreiner",     "suchbegriffe": ["Schreinerei", "Tischlerei"] },
+    { "branche": "handwerk", "gewerk": "Elektro",       "suchbegriffe": ["Elektroinstallateur", "Elektrotechnik Meisterbetrieb"] },
+    { "branche": "handwerk", "gewerk": "SHK",           "suchbegriffe": ["Sanitär Heizung Klima", "Heizungsbauer"] },
+    { "branche": "handwerk", "gewerk": "Maler",         "suchbegriffe": ["Malerbetrieb", "Maler und Lackierer"] }
+  ],
+  "ausschluss_ketten": [
+    "Bosch Car Service", "ATU", "A.T.U", "Pitstop", "Euromaster", "Vergölst", "Premio",
+    "Meisterhaft", "1a autoservice", "AutoCrew", "ad-Autodienst", "Point S", "Driver Center"
+  ],
+  "konzeptwerkstatt_hinweis": "Konzeptwerkstätten nicht ausschließen, sondern als 'nur Module' markieren (Karriereseite, Automatisierung).",
+  "scoring": {
+    "branche_passend": 20,
+    "mitarbeiter_10_50": 20,
+    "mitarbeiter_5_9": 8,
+    "sucht_personal": 20,
+    "website_schwach": 20,
+    "pflichtenanlass": 10,
+    "region_kern": 10,
+    "schwelle_vorschlag": 55
+  },
+  "limits": {
+    "max_neue_leads_pro_lauf": 200,
+    "max_anfragen_pro_sekunde_je_domain": 1,
+    "agent_max_eur_pro_lauf": 1.5
+  }
+}
