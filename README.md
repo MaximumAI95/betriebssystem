@@ -9,6 +9,7 @@ Ziel: Daniel markiert einen Lead als „interessant“. Nach rund 30 Minuten lie
 |---|---|
 | `db/migrations/` | Datenbank: Betriebe, Kontakte, Analysen, Dokumente, Angebote, Pakete und Preise aus dem Plan, Agenten-Warteschlange, Freigaben, Zeitleiste, Login, Row Level Security. **Getestet mit PostgreSQL 16.** |
 | `web/` | CRM-Oberfläche (Next.js): Übersicht, Neue Leads, Pipeline, Betriebsakte, Freigaben, Agenten |
+| `docs/zielbild.md` | Zielbild: ein Tool für alles (Finanzen, Buchhaltung, Postfach) |
 | `docs/agenten.md` | Die 9 Agenten: Auslöser, Ein- und Ausgaben, Regeln, rechtliche Grenzen |
 | `config/lead-suche.json` | Regionen, Gewerke, Ketten-Ausschluss, Score-Gewichte, Limits |
 | `.env.example` | Welche Zugangsdaten gebraucht werden (Werte nie in den Chat) |
@@ -81,7 +82,8 @@ Tests: `npm test` (Status-Logik, Freigaben, Versandregel) und `npm run lint` (Ty
 | **M2 · Leads** | A0 Lead-Finder, A1 Anreicherung, A2 Bewerter. Pilot mit **einer Region und einem Gewerk** (z. B. Kfz Karlsruhe), Qualität mit Daniel prüfen | Nov 2026 |
 | **M3 · Check und Unterlagen** | A3 Online-Check (Report-PDF, Leitfaden), A7 Terminmappe und Brief-Entwurf | Dez 2026 |
 | **M4 · Demo** | A4 Demo-Generator mit 2 Branchenvorlagen (Kfz, Schreiner), Vorschau-Hosting mit Zugangscode, Löschung nach 60 Tagen, A5 QA | Jan 2027 (Stufe 1) |
-| **M5 · Abschluss** | A6 Prozess-Check-Auswertung, Angebot aus der Preistabelle, E-Signatur, Stripe-Checkout mit SEPA-Mandat, Webhooks ins CRM | Jan–Feb 2027 |
+| **M5 · Abschluss und Finanzen** | A6 Prozess-Check-Auswertung, Angebot aus der Preistabelle, E-Signatur, Stripe-Checkout mit SEPA-Mandat. **Finanzen in der Kundenakte:** Rechnungen, Zahlungen, Umsatz, offene Posten aus Stripe-Webhooks | Jan–Feb 2027 |
+| **M5b · Buchhaltung und Postfach** | Buchhaltung per Klick über lexoffice- oder sevDesk-API (E-Rechnung, Zahlungsabgleich, Belege, DATEV-Export). Postfach: eingehende Mails in der Zeitleiste, Entwürfe ins Postfach. Siehe `docs/zielbild.md` | Feb–Mär 2027 |
 | **M6 · Lieferung** | A8 Bau-Agent, Kundenportal für Rückfragen, Reports, Upsell-Signale | bis Apr 2027 (Stufe 2) |
 
 ## Rechtliche Leitplanken (fest eingebaut)
