@@ -1,6 +1,6 @@
 # Die Agenten des Betriebssystems
 
-Jeder Agent ist ein eigenständiger Job. Der **Orchestrator** (ein Node-Prozess auf einem EU-Server) holt mit `naechster_lauf()` den nächsten wartenden Auftrag aus der Tabelle `agent_laeufe`, startet den passenden Agenten, schreibt Ergebnis, Kosten und Fehler zurück und setzt den Status des Betriebs weiter. Ausgelöst werden die Läufe durch Statuswechsel im CRM (Datenbank-Trigger, siehe `db/schema.sql`) oder zeitgesteuert (Lead-Finder).
+Jeder Agent ist ein eigenständiger Job. Der **Orchestrator** (ein Node-Prozess auf einem EU-Server) holt mit `naechster_lauf()` den nächsten wartenden Auftrag aus der Tabelle `agent_laeufe`, startet den passenden Agenten, schreibt Ergebnis, Kosten und Fehler zurück und setzt den Status des Betriebs weiter. Ausgelöst werden die Läufe durch Statuswechsel im CRM (Datenbank-Trigger, siehe `db/migrations/001_schema.sql`) oder zeitgesteuert (Lead-Finder).
 
 Grundregeln für alle Agenten:
 

@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-marke: #c2410c;
+  --color-marke-hell: #fff7ed;
+}
+
+body {
+  @apply bg-stone-50 text-stone-900 antialiased;
+}
+
+@layer components {
+  .karte {
+    @apply rounded-lg border border-stone-200 bg-white;
+  }
+
+  .knopf {
+    @apply inline-flex items-center gap-1 rounded-md border border-stone-300 bg-white px-3 py-1.5 text-sm font-medium hover:bg-stone-100 disabled:opacity-50;
+  }
+
+  .knopf-primaer {
+    @apply inline-flex items-center gap-1 rounded-md bg-marke px-3 py-1.5 text-sm font-medium text-white hover:bg-orange-800 disabled:cursor-not-allowed disabled:bg-stone-300 disabled:text-stone-600;
+  }
+
+  .eingabe {
+    @apply w-full rounded-md border border-stone-300 bg-white px-3 py-1.5 text-sm focus:border-marke focus:outline-none focus:ring-1 focus:ring-marke;
+  }
+
+  .etikett {
+    @apply mb-1 block text-xs font-medium uppercase tracking-wide text-stone-500;
+  }
+}
